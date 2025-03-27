@@ -54,6 +54,9 @@ RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/od
     && apt-get -y install --no-install-recommends ./odoo.deb \
     && rm -rf /var/lib/apt/lists/* odoo.deb
 
+# Lock setup tools
+RUN pip install --break-system-packages --no-cache-dir setuptools==71.1.0 setuptools_rust pyOpenSSL;
+
 # Library fix
 RUN pip install \
         lxml==4.9.4 \
