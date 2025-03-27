@@ -30,6 +30,7 @@ RUN apt-get update && \
         python3-xlrd \
         python3-xlwt \
         postgresql-client \
+        libpq-dev \
         wkhtmltopdf \
         g++ \
         xz-utils
@@ -52,6 +53,16 @@ RUN curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/od
     && apt-get update \
     && apt-get -y install --no-install-recommends ./odoo.deb \
     && rm -rf /var/lib/apt/lists/* odoo.deb
+
+# Library fix
+RUN pip install \
+        lxml==4.9.4 \
+        psutil==5.9.8 \
+        PyPDF2==1.28.6 \
+        Werkzeug==2.0.2 \
+        gevent==21.12.0 \
+        psycopg2==2.9.10 \
+        Pillow==9.5.0
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
